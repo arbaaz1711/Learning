@@ -5,17 +5,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EJS-Templating</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div>
+  <div class="container">
+    <h1>Todo Tasks</h1>
     <div>
       <% for(var i=0; i< exej.length; i++){ %>
         <p>
           <%= exej[i] %>
         </p>
         <% } %>
-          <form action="/" method="post">
+          <form action="/" method="post" class="form-container">
             <input type="text" name="task" placeholder="Please enter task" />
             <div class="btn-container">
               <button class="sub" type="submit">+</button>
