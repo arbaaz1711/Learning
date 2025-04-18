@@ -5,22 +5,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EJS-Templating</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
   <div class="container">
-    <h1>Todo Tasks</h1>
-    <div>
+    <div class="header">
+      <p style="font-size: 30px; font-weight: bold;">Header</p>
+    </div>
+    <div class="task-container">
       <% for(var i=0; i< exej.length; i++){ %>
-        <p>
-          <%= exej[i] %>
-        </p>
+        <div class="list-container">
+          <h3>
+            <%= exej[i] %>
+          </h3>
+          <button class="delete-btn">X</button>
+        </div>
         <% } %>
           <form action="/" method="post" class="form-container">
-            <input type="text" name="task" placeholder="Please enter task" />
+            <input class="input-field" type="text" name="task" placeholder="Please enter task" />
             <div class="btn-container">
-              <button class="sub" type="submit">+</button>
+              <button class="submit-btn" type="submit">+</button>
             </div>
           </form>
     </div>
