@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reaction timer</title>
+  <style>
+    #shape{
+      width: 200px;
+      height: 200px;
+      background-color: red;
+      position: relative;
+    }
+  </style>
+
+</head>
+<body>
+  <h1>Reaction tester</h1>
+  <p>Click on the boxes as quickly as you can!</p>
+  <div id="shape"></div>
+  <script>
+    var start = new Date().getTime();
+    
+    function getRandomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    
+    function move(){
+      var leftPosition = Math.random() * 80;
+      var topPosition = Math.random() * 80;
+      var size = Math.random() * 150 + 150;
+      
+      shape.style.left = leftPosition + '%';
+      shape.style.top = topPosition + '%';
+      shape.style.width = size + 'px';
+      shape.style.height = size + 'px';
+      shape.style.backgroundColor = getRandomColor();
+    }
+    move();
+    
+    shape.onclick = function(){
+      var end = new Date().getTime();
+      var reactionTime = (end - start) / 1000;
+      alert("Your reaction time is " + reactionTime + " seconds");
+      move();
+      start = new Date().getTime();
+    }
+  </script>
+  
+</body>
+</html>

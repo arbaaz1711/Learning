@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="weather-card">
+            <div class="location">
+                <img src="images/location-pin.png" alt="location" id="location-icon">
+                <span id="city">Loading...</span>
+            </div>
+            <div class="description" id="weather-description">Loading...</div>
+            <div class="temperature">
+                <span id="temp">--</span><span class="degree">°C</span>
+            </div>
+            <div class="weather-icon" id="weather-icon">
+                <img src="images/cloud.png" alt="WeatherIcon" id="icon-img">
+            </div>
+            <div class="weather-details">
+                <div class="detail">
+                    <div class="label">Humidity</div>
+                    <div class="value" id="humidity">--%</div>
+                </div>
+                <button class="refresh-btn" id="refresh-btn">
+                    <img src="images/refresh.png" alt="refresh" id="refresh-icon">
+                </button>
+                <div class="detail">
+                    <div class="label">Wind Speed</div>
+                    <div class="value" id="wind">-- km/h</div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
