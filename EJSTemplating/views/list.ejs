@@ -1,35 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EJS-Templating</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-  <div class="container">
-    <div class="header">
-      <p style="font-size: 30px; font-weight: bold;">Header</p>
-    </div>
-    <div class="task-container">
-      <% for(var i=0; i< exej.length; i++){ %>
-        <div class="list-container">
-          <h3>
-            <%= exej[i] %>
-          </h3>
-          <button class="delete-btn">X</button>
+<div class="container">
+  <div class="task-container">
+    <% for(var i=0; i< todoList.length; i++){ %>
+    <div class="list-container" id="list-container-<%=i%>">
+      <span> <%= todoList[i] %> </span>
+      <div style="display: flex; gap: 15px">
+        <div class="edit-btn" id="edit-btn-<%=i%>" onclick="editTask('<%=i%>')" title="edit">
+          <img src="/images/edit.png" alt="edit" width="20px" height="20px" />
         </div>
-        <% } %>
-          <form action="/" method="post" class="form-container">
-            <input class="input-field" type="text" name="task" placeholder="Please enter task" />
-            <div class="btn-container">
-              <button class="submit-btn" type="submit">+</button>
-            </div>
-          </form>
+        <div
+          class="delete-btn"
+          id="delete-btn-<%=i%>"
+          onclick="deleteTask('<%=i%>', '<%= todoList %>')"
+          title="Delete"
+        >
+          <img
+            src="/images/delete.png"
+            alt="delete"
+            width="20px"
+            height="20px"
+          />
+        </div>
+      </div>
     </div>
+    <% } %>
+    <form action="/" method="post" class="form-container">
+      <input
+        class="input-field"
+        type="text"
+        name="task"
+        placeholder="Please enter task"
+      />
+      <% if(locals.error){ %>
+      <div class="error-message" style="color: red; margin-top: 5px">
+        <%= error %>
+      </div>
+      <% } %>
+      <div class="btn-container">
+        <button class="submit-btn" type="submit">+</button>
+      </div>
+    </form>
   </div>
-</body>
-
-</html>
+</div>
