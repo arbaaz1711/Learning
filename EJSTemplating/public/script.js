@@ -1,16 +1,5 @@
-function toggleLineThrough(index) {
-  const label = document.getElementById("label-" + index);
-  label.classList.toggle("completed");
-}
-
-function deleteTask(index, arr) {
+function deleteTask(index) {
   if (confirm("Are you sure you want to delete this task?")) {
-    // Remove task from DOM
-    const taskElement = document.getElementById("list-container-" + index);
-    if (taskElement) {
-      taskElement.remove();
-    }
-
     // Send request to update server
     fetch("/delete", {
       method: "POST",
@@ -20,23 +9,26 @@ function deleteTask(index, arr) {
       body: JSON.stringify({ index: index }),
     })
       .then((response) => {
-        console.log(response);
         if (response.ok) {
-          console.log("Task deleted successfully");
+          // Reload the page to show updated list with correct numbering
+          window.location.reload();
+        } else {
+          alert("Error deleting task");
         }
       })
       .catch((error) => {
-        console.log(error);
         console.error("Error deleting task:", error);
+        alert("Error deleting task");
       });
   }
 }
 
 function editTask(index) {
   const parentDiv = document.getElementById("list-container-" + index);
-  const childDiv = parentDiv.querySelector("div");
-  childDiv.style.display = "none";
-  const task = parentDiv.querySelector("span");
+  const actionBtns = document.getElementById("btn-container-" + index);
+  console.log(actionBtns, "actionBtns");
+  actionBtns.style.display = "none";
+  const task = parentDiv.getElementsByClassName("task-description")[0];
   const input = document.createElement("input");
   const saveBtn = document.createElement("button");
   input.type = "text";
@@ -56,7 +48,7 @@ function editTask(index) {
     }
     task.textContent = input.value;
     task.style.display = "block";
-    childDiv.style.display = "flex";
+    actionBtns.style.display = "flex";
     parentDiv.removeChild(input);
     parentDiv.removeChild(saveBtn);
     fetch(`/${index}`, {
@@ -72,5 +64,18 @@ function editTask(index) {
       .catch((error) => {
         console.log(error, "error");
       });
+  });
+}
+
+function changePriority(priority, todoList) {
+  const taskContainer = document.getElementsByClassName("tasks-list");
+  const filteredList = JSON.parse(todoList).map((item, index) => {
+    if (item.priority === priority) {
+      taskContainer[index].style.display = "flex";
+    } else if (priority === "all") {
+      taskContainer[index].style.display = "flex";
+    } else {
+      taskContainer[index].style.display = "none";
+    }
   });
 }

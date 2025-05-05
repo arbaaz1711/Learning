@@ -19,18 +19,16 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  console.log("req", req.body.task);
   if (req.body.task.trim() === "") {
-    res.render("index", { todoList: listItems, error: "Please enter a task" });
+    res.render("index", { todoList: listItems, error: "Task cannot be empty" });
   } else {
-    listItems.push(req.body.task);
+    listItems.push({ task: req.body.task, priority: req.body.priority });
     res.redirect("/");
   }
 });
 
 app.post("/delete", (req, res) => {
   const index = req.body.index;
-  console.log(index);
   if (index !== undefined && index >= 0 && index < listItems.length) {
     listItems.splice(index, 1);
     res.status(200).json({ success: true });
@@ -41,9 +39,7 @@ app.post("/delete", (req, res) => {
 
 app.put("/:index", (req, res) => {
   const index = req.params.index;
-  console.log("req", req.body);
-  listItems[index] = req.body.value;
-  console.log("listItems", listItems);
+  listItems[index].task = req.body.value;
 });
 
 app.listen(port, () => {
