@@ -1,0 +1,64 @@
+<div class="container">
+  <div style="display: flex; gap: 10px; align-self: flex-end; margin-bottom: 10px">
+    <span style="font-size: 20px; font-weight: 600; color: #fff">Filter by priority</span>
+    <div class="form-group">
+      <select name="priority" id="priority" class="form-select"
+        onchange="changePriority(this.value, '<%= JSON.stringify(todoList) %>')">
+        <option value="all" selected>All</option>
+        <option value="low" class="text-success" value="low">Low</option>
+        <option value="medium" class="text-warning" value="medium">
+          Medium
+        </option>
+        <option value="high" class="text-danger" value="high">High</option>
+      </select>
+    </div>
+  </div>
+  <% if(todoList.length===0){ %>
+    <div class="no-tasks-container">
+      <span>No tasks found. Please add a task.</span>
+    </div>
+    <% } else { %>
+      <div class="task-container">
+        <% for(var i=0; i< todoList.length; i++){ %>
+          <div class="tasks-list" id="task-container-<%=i%>">
+            <div class="list-container" id="list-container-<%=i%>">
+              <div style="display: flex; gap: 5px; align-items: center">
+                <div
+                  class="task-priority-circle <%= todoList[i].priority === 'low' ? 'priority-low' : todoList[i].priority === 'medium' ? 'priority-medium' : 'priority-high' %>">
+                </div>
+                <span class="task-description">
+                  <%= todoList[i].task %>
+                </span>
+              </div>
+              <div id="btn-container-<%=i%>" style="display: flex; gap: 15px">
+                <div class="edit-btn" id="edit-btn-<%=i%>" onclick="editTask('<%=i%>', '<%= todoList[i]._id %>')"
+                  title="edit">
+                  <img src="/images/edit.png" alt="edit" width="20px" height="20px" />
+                </div>
+                <div class="delete-btn" id="delete-btn-<%=i%>" onclick="deleteTask('<%=i%>', '<%= todoList[i]._id %>')"
+                  title="Delete">
+                  <img src="/images/delete.png" alt="delete" width="20px" height="20px" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <% } %>
+      </div>
+      <% } %>
+        <div class="form-container">
+          <form action="/" method="post" class="form">
+            <div style="display: flex; gap: 10px; align-items: center">
+              <input class="input-field" type="text" name="task" placeholder="Please enter task" />
+              <%- include('priority') %>
+                <% if(locals.error){ %>
+                  <div class="error-message">
+                    <%= error %>
+                  </div>
+                  <% } %>
+            </div>
+            <div class="btn-container">
+              <button class="submit-btn" type="submit">Add task</button>
+            </div>
+          </form>
+        </div>
+</div>
