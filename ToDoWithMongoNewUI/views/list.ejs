@@ -1,0 +1,247 @@
+<div class="container">
+  <div class="top-controls">
+    <div class="filter-container">
+      <label for="priority">Filter by priority</label>
+      <select
+        name="priority"
+        id="priority"
+        class="form-select"
+        onchange="changePriority(this.value)"
+      >
+        <option value="all" selected>All</option>
+        <option value="low" class="text-success">Low</option>
+        <option value="medium" class="text-warning">Medium</option>
+        <option value="high" class="text-danger">High</option>
+      </select>
+    </div>
+
+    <div class="add-task-container">
+      <form action="/" method="post" class="form">
+        <div class="input-group">
+          <input
+            class="form-control"
+            type="text"
+            name="task"
+            id="task-input"
+            placeholder="Add a new task..."
+            required
+          />
+          <select name="priority" id="priority-input" class="form-select priority-select" required>
+            <option value="" disabled selected>Priority</option>
+            <option value="low" class="text-success">Low</option>
+            <option value="medium" class="text-warning">Medium</option>
+            <option value="high" class="text-danger">High</option>
+          </select>
+          <button class="btn btn-primary add-btn" type="submit">
+            <i class="fas fa-plus"></i> Add Task
+          </button>
+        </div>
+        <% if(locals.error){ %>
+        <div class="error-message"><%= error %></div>
+        <% } %>
+        <div id="form-error-message" class="error-message" style="display: none;"></div>
+      </form>
+    </div>
+  </div>
+
+  <div id="task-list-container">
+    <%- include('partials/task-list') %>
+  </div>
+</div>
+
+<style>
+  :root {
+    --primary-color: #6b46c1;
+    --primary-light: #7c5bc9;
+    --low-color: #48bb78;
+    --medium-color: #ecc94b;
+    --high-color: #f56565;
+  }
+
+  body {
+    background: linear-gradient(
+      135deg,
+      var(--primary-color),
+      var(--primary-light)
+    );
+    min-height: 100vh;
+    padding: 2rem 0;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .app-title {
+    color: white;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+  }
+
+  .top-controls {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+  }
+
+  .filter-container {
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-container label {
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .form-select {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 5px;
+  }
+
+  .add-task-container {
+    margin-top: 1rem;
+  }
+
+  .input-group {
+    gap: 10px;
+  }
+
+  .priority-select {
+    max-width: 120px;
+  }
+
+  .add-btn {
+    background-color: white;
+    color: var(--primary-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .add-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .table thead th {
+    background-color: #2d3748;
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 1rem;
+  }
+
+  .table tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .task-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .priority-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .priority-indicator.low {
+    background-color: var(--low-color);
+  }
+  .priority-indicator.medium {
+    background-color: var(--medium-color);
+  }
+  .priority-indicator.high {
+    background-color: var(--high-color);
+  }
+
+  .priority-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: inline-block;
+  }
+
+  .priority-badge.low {
+    background-color: #c6f6d5;
+    color: #22543d;
+  }
+
+  .priority-badge.medium {
+    background-color: #fefcbf;
+    color: #744210;
+  }
+
+  .priority-badge.high {
+    background-color: #fed7d7;
+    color: #822727;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .action-buttons button {
+    padding: 0.4rem 0.6rem;
+    border-radius: 5px;
+  }
+
+  .edit-input-container {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .edit-task-input {
+    flex-grow: 1;
+  }
+
+  .no-tasks-container {
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: white;
+  }
+
+  .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .error-message {
+    color: var(--high-color);
+    background: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+  }
+</style>
+
+<!-- Add Font Awesome for icons -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
