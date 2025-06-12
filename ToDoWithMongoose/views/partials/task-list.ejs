@@ -1,0 +1,83 @@
+<% if(todoList.length===0){ %>
+<div class="no-tasks-container">
+  <i class="fas fa-tasks empty-icon" style="font-size: 16px"></i>
+  <span>No tasks found. Add your first task above!</span>
+</div>
+<% } else { %>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th width="5%">S.No</th>
+        <th width="50%">Task Title</th>
+        <th width="15%">Priority</th>
+        <th width="15%">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(var i=0; i< todoList.length; i++){ %>
+      <tr id="task-row-<%=i%>">
+        <td class="text-center"><%= i + 1 %></td>
+        <td>
+          <div class="task-title-container" id="task-title-<%=i%>">
+            <div class="task-content">
+              <div
+                class="priority-indicator <%= todoList[i].priority.toLowerCase() %>"
+              ></div>
+              <span class="task-description" id="task-text-<%=i%>"
+                ><%= todoList[i].task %></span
+              >
+            </div>
+            <div
+              class="edit-input-container"
+              style="display: none"
+              id="edit-container-<%=i%>"
+            >
+              <input
+                type="text"
+                class="form-control edit-task-input"
+                id="edit-input-<%=i%>"
+                value="<%= todoList[i].task %>"
+              />
+              <button
+                class="btn btn-success save-btn"
+                onclick="saveEditedTask('<%=i%>', '<%= todoList[i]._id %>')"
+                title="Save"
+              >
+                <i class="fas fa-check"></i>
+              </button>
+            </div>
+          </div>
+        </td>
+        <td>
+          <span
+            class="priority-badge <%= todoList[i].priority.toLowerCase() %>"
+            style="text-transform: capitalize"
+          >
+            <%= todoList[i].priority %>
+          </span>
+        </td>
+        <td>
+          <div class="action-buttons">
+            <button
+              class="btn btn-outline-primary btn-sm edit-btn"
+              onclick="editTask('<%=i%>', '<%= todoList[i]._id %>')"
+              title="Edit"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+            <button
+              class="btn btn-outline-danger btn-sm delete-btn"
+              onclick="deleteTask('<%=i%>', '<%= todoList[i]._id %>')"
+              title="Delete"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+<% } %> 
